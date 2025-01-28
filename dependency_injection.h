@@ -3,56 +3,44 @@
 #include <memory>
 #include <string>
 
-namespace dependencyInjection
-{
+namespace dependencyInjection{
 	using namespace ::std;
 
-	class iProdukt
-	{
+	class iProdukt{
 	protected:
 		string name;
 	public:
 		virtual void sendAlert() const = 0;
-		virtual string getName() const
-		{
-			return name;
-		}
+		virtual string getName() const { return name; }
 		virtual ~iProdukt(){}
 	};
 
-	class iPhone : public iProdukt
-	{
+	class iPhone : public iProdukt{
 	public:
-		iPhone():iProdukt()
-		{
+		iPhone():iProdukt(){
 			this->name = "iPhone twojego starego";
 		}
-		void sendAlert() const override
-		{
-			cout << "" << endl;
+		void sendAlert() const override	{
+			cout << "warning pozor attencion uwaga" << endl;
 		}
-		string getName() const override
-		{
+		string getName() const override{
 			return iProdukt::getName();
 		}
 	};
 
-	class AppleHub
-	{
+	class AppleHub{
 	private:
 		shared_ptr<iProdukt> device;
 	public:
 		AppleHub(shared_ptr<iProdukt> p):device(move(p)){}
-		void notify() const
-		{
+		void notify() const{
 			cout << this->device->getName() << " sent alert: ";
 			this->device->sendAlert();
 		}
 		~AppleHub(){}
 	};
 
-	void test()
-	{
+	void test(){
 		shared_ptr<iProdukt> iphone = make_shared<iPhone>();
 		unique_ptr<AppleHub> hub = make_unique<AppleHub>(iphone);
 		hub->notify();
