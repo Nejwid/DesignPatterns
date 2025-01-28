@@ -4,65 +4,52 @@
 #include <vector>
 #include <string>
 
-namespace builder
-{
+namespace builder{
 	using namespace ::std;
 
-	class FortniteLocker
-	{
+	class FortniteLocker{
 	private:
 		string skin, backbling, pickaxe;
 	public:
 		FortniteLocker(){}
-		void setSkin(const string& s)
-		{
+		void setSkin(const string& s){
 			this->skin = s;
 		}
-		void setBackbling(const string& b)
-		{
+		void setBackbling(const string& b){
 			this->backbling = b;
 		}
-		void setPickaxe(const string& p)
-		{
+		void setPickaxe(const string& p){
 			this->pickaxe = p;
 		}
-		void displayInfo() const
-		{
+		void displayInfo() const{
 			cout << this->skin << ", " << this->backbling << ", " << this->pickaxe << endl;
 		}
 		~FortniteLocker(){}
 	};
 
-	class LockerBuilder
-	{
+	class LockerBuilder{
 	private:
 		unique_ptr<FortniteLocker> locker;
 	public:
-		LockerBuilder()
-		{
+		LockerBuilder(){
 			this->locker = make_unique<FortniteLocker>();
 		}
-		void setSkin(const string& s)
-		{
+		void setSkin(const string& s){
 			locker->setSkin(s);
 		}
-		void setBackbling(const string& b)
-		{
+		void setBackbling(const string& b){
 			locker->setBackbling(b);
 		}
-		void setPickaxe(const string& p)
-		{
+		void setPickaxe(const string& p){
 			locker->setPickaxe(p);
 		}
-		unique_ptr<FortniteLocker> &getLocker()
-		{
+		unique_ptr<FortniteLocker> &getLocker(){
 			return this->locker;
 		}
 
 	};
 
-	void test()
-	{
+	void test(){
 		LockerBuilder builder;
 		builder.setBackbling("frozen wings");
 		builder.setSkin("black knight");
@@ -72,11 +59,9 @@ namespace builder
 	}
 }
 
-namespace BobTheBuilder
-{
+namespace BobTheBuilder{
 	using namespace::std;
-	class House
-	{
+	class House{
 	private:
 		string paint;
 		int floors, bathrooms;
@@ -85,15 +70,13 @@ namespace BobTheBuilder
 		void setFloors(int f) { this->floors = f; }
 		void setBathrooms(int b) { this->bathrooms = b; }
 		void setPaint(const string& p) { this->paint = p; }
-		void displayInfo() const
-		{
+		void displayInfo() const{
 			cout << floors << "floors, " << bathrooms << "bathrooms, " << paint << endl;
 		}
 		~House(){}
 	};
 
-	class virtualHouseBuilder
-	{
+	class virtualHouseBuilder{
 	protected:
 		shared_ptr<House> house;
 	public:
@@ -102,39 +85,33 @@ namespace BobTheBuilder
 		virtual ~virtualHouseBuilder(){}
 	};
 
-	class HouseBuilder : public virtualHouseBuilder
-	{
+	class HouseBuilder : public virtualHouseBuilder{
 	public:
 		HouseBuilder():virtualHouseBuilder(){}
-		void setParameters(const string& paint, int floors, int bathrooms) override
-		{
+		void setParameters(const string& paint, int floors, int bathrooms) override{
 			this->house->setBathrooms(bathrooms);
 			this->house->setFloors(floors);
 			this->house->setPaint(paint);
 		}
-		shared_ptr<House> getHouse() 
-		{
+		shared_ptr<House> getHouse() {
 			return this->house;
 		}
 	};
 
-	// dependency injection; iniekcja instancji House Builder buduj¹ca obiekty House 
+	// dependency injection; iniekcja instancji House Builder budujÂ¹ca obiekty House 
 
-	class ConstructionSite
-	{
+	class ConstructionSite{
 	private:
 		unique_ptr<HouseBuilder> hb;
 		vector<shared_ptr<House>> hs;
 	public:
 		ConstructionSite(unique_ptr<HouseBuilder>hb):hb(move(hb)), hs(){}
-		void build(const string& paint, int floors, int bathrooms)
-		{
+		void build(const string& paint, int floors, int bathrooms){
 			this->hb->setParameters(paint, floors, bathrooms);
 			this->hs.push_back(move(this->hb->getHouse()));
 			this->hb.reset(new HouseBuilder);
 		}
-		void getInfo() const
-		{
+		void getInfo() const{
 			if(!this->hs.empty())
 			for (const auto& it : hs)
 			{
@@ -144,8 +121,7 @@ namespace BobTheBuilder
 		~ConstructionSite(){}
 	};
 
-	void test()
-	{
+	void test(){
 		unique_ptr<ConstructionSite> budowa = make_unique<ConstructionSite>(make_unique<HouseBuilder>());
 		budowa->build("baby blue", 2, 2);
 		budowa->build("celeste", 3, 4);
