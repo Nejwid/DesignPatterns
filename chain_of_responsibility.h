@@ -15,6 +15,7 @@ namespace chainOfResponsibility {
 		void setNext(unique_ptr<CC> n){
 			next = move(n);
 		}
+		// przenieś do wyższej next instancji jeśli została określona
 		virtual void help(Ticket* t){
 			if (next)
 				next->help(t);
@@ -25,7 +26,8 @@ namespace chainOfResponsibility {
 
 	class BasicCC : public CC{
 	public:
-		void help(Ticket* t) override{
+		// jesli ticket jest basic pomóż, else przenieś do wyższej instancji
+		void help(Ticket* t) override{ 
 			Basic* b = dynamic_cast<Basic*>(t);
 			if (b)
 				cout << "helped basic\n";
