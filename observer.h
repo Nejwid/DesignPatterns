@@ -18,15 +18,15 @@ namespace observer_{
 
 	class Obserwator{
 	public:
-		virtual void nast¹pi³aZmianaObiektu(const Obiekt& o) const{
+		virtual void nastÂ¹piÂ³aZmianaObiektu(const Obiekt& o) const{
 			cout << "nastapila zmiana stanu obiektu " << o.getName() << endl;
 		}
 	};
 
 	class Radar : public Obserwator{
 	public:
-		void nast¹pi³aZmianaObiektu(const Obiekt& o) const override{
-			Obserwator::nast¹pi³aZmianaObiektu(o);
+		void nastÂ¹piÂ³aZmianaObiektu(const Obiekt& o) const override{
+			Obserwator::nastÂ¹piÂ³aZmianaObiektu(o);
 		}
 	};
 
@@ -41,13 +41,12 @@ namespace observer_{
 		}
 		void powiadom(){
 			for (const auto& it : obs){
-				it.nast¹pi³aZmianaObiektu(obj);
+				it.nastÂ¹piÂ³aZmianaObiektu(obj);
 			}
 		}
 	};
 
-	void test()
-	{
+	void test(){
 		Radar d;
 		Radar b;
 		Obiekt o("missile");
@@ -57,8 +56,7 @@ namespace observer_{
 		inf.powiadom();
 	}
 
-	void run_test()
-	{
+	void run_test(){
 		thread run(test);
 		run.join();
 	}
