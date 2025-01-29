@@ -61,12 +61,4 @@ namespace chainOfResponsibility {
 			basic->help(t);
 		}
 	};
-
-	void test()
-	{
-		CustomerCare cc;
-		cc.help(new Advanced);
-		cc.help(new Basic);
-	}
-
 }
