@@ -4,60 +4,11 @@
 #include <list>
 #include <algorithm>
 
-namespace bridge {
-	using namespace ::std;
-
-	class Shape {
-	public:
-		virtual string getType() const = 0;
-		virtual ~Shape() {}
-	};
-
-	class Drawing {
-	protected:
-		unique_ptr<Shape> shape;
-	public:
-		Drawing(unique_ptr<Shape> s):shape(move(s)){}
-		virtual void draw() = 0;
-		virtual ~Drawing(){}
-	};
-
-	//=============================================//
-
-	class DrawOnScreen : public Drawing {
-	public:
-		DrawOnScreen(unique_ptr<Shape> s):Drawing(move(s)){}
-		void draw() override {
-			cout << "Drawing on screen" << shape->getType() << endl;
-		}
-	};
-
-	class Print : public Drawing {
-	public:
-		Print(unique_ptr<Shape> s) :Drawing(move(s)) {}
-		void draw() override {
-			cout << "Printing on papersheet " << shape->getType() << endl;
-		}
-	};
-
-	//==============================================//
-
-	class Rectangle : public Shape {
-	public:
-		string getType() const override{
-			return "rectangle";
-		}
-	};
-
-	class Triangle : public Shape {
-	public:
-		string getType() const override{
-			return "triangle";
-		}
-	};
-}
-
-
+/*
+* połączenie wzorców factory, bridge oraz strategy
+* schronisko dla zwierząt przechowuje różne rodzaje zwierząt i pozwala na dokonanie adopcji wg wieku, długości przebywania oraz typu zwierzęcia
+* wykorzystuje min. rzutowanie dynamiczne, inteligentne wskaźniki
+*/
 namespace bridge_Shelter {
 	using namespace ::std;
 
@@ -117,8 +68,7 @@ namespace bridge_Shelter {
 			animals.emplace_back(make_unique<Bird>(s, n));
 		}
 		void showInfo() const{
-			for (const auto& it : animals)
-			{
+			for (const auto& it : animals){
 				it->displayInfo(); it->speak();
 			}
 		}
@@ -127,12 +77,9 @@ namespace bridge_Shelter {
 		}
 		void adoptAnimal(interfaceShelter::AdoptionStrategy &strategy){
 			unique_ptr<Animal> adoptedAnimal = strategy.adopt(animals);
-			if (adoptedAnimal)
-			{
-				for (auto it = animals.begin(); it != animals.end(); ++it)
-				{
-					if (it->get() == adoptedAnimal.get())
-					{
+			if (adoptedAnimal){
+				for (auto it = animals.begin(); it != animals.end(); ++it){
+					if (it->get() == adoptedAnimal.get()){
 						animals.erase(it);
 						break;
 					}
@@ -154,10 +101,8 @@ namespace interfaceShelter{
 
 	class AdoptOldest : public AdoptionStrategy{
 	public:
-		unique_ptr<bs::Animal> adopt(list <unique_ptr<bs::Animal>> animals) override
-		{
-			if (!animals.empty())
-			{
+		unique_ptr<bs::Animal> adopt(list <unique_ptr<bs::Animal>> animals) override{
+			if (!animals.empty()){
 				sort(animals.begin(), animals.end());
 				animals.front()->displayInfo();
 				return move(animals.front());
