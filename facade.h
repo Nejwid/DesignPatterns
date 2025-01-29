@@ -4,9 +4,8 @@
 #include <algorithm>
 #include <vector>
 
-
-namespace heatingSystem
-{
+// przykład "fasady"(?) gdzie włączamy/wyłączamy wszystko jednym guziczkiem
+namespace heatingSystem{
 	using namespace::std;
 
 	class heatingSystemPart{
