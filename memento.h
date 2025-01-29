@@ -13,14 +13,14 @@ namespace memento_{
 		string getState() const { return state; }  // jedna instancja memento przechowuje jeden stan
 	};
 
-	class Source{   // klasa Ÿród³owa której stan przechowuje memento ; za pomoc¹ memento mo¿emy przywrócic stan Ÿród³a
+	class Source{   // klasa Å¸rÃ³dÂ³owa ktÃ³rej stan przechowuje memento ; za pomocÂ¹ memento moÂ¿emy przywrÃ³cic stan Å¸rÃ³dÂ³a
 	private:
 		string state;
 	public:
 		void setState(const string& s) { state = s; }
 		string getState() const { return state; }
 		Memento save() const{
-			return Memento(state);    //  za pomoc¹ funkcji memento mo¿emy stworzyæ obiekt memento który od razu zapiszemy do vector<memento>
+			return Memento(state);    //  za pomocÂ¹ funkcji memento moÂ¿emy stworzyÃ¦ obiekt memento ktÃ³ry od razu zapiszemy do vector<memento>
 		}
 		void restore(const Memento& m){
 			state = m.getState();
@@ -34,7 +34,7 @@ namespace memento_{
 		void addMemento(const Memento& m){
 			h.push(m);
 		}
-		Memento przywróc(){
+		Memento przywrÃ³c(){
 			if (!h.empty()){
 				Memento history = h.top();
 				h.pop();
@@ -56,7 +56,7 @@ namespace memento_{
 			hist.addMemento(src.save());
 		}
 		void returnState(){
-			src.restore(hist.przywróc());
+			src.restore(hist.przywrÃ³c());
 		}
 		void showState(){
 			cout << src.getState() << endl;
@@ -64,14 +64,13 @@ namespace memento_{
 		~HistoryManager(){}
 	};
 
-	void test()
-	{
+	void test(){
 		Source tekstEditor;
 		Historia editorHistory;
 		HistoryManager menago(tekstEditor, editorHistory);
 		menago.setState("fortnite");
 		menago.saveState();
-		menago.setState("sdadsa");
+		menago.setState("fifa_35");
 		menago.setState("cs go");
 		menago.saveState();
 		menago.showState();
