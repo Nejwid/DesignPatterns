@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 
+// symulacja Customer Care
 namespace chainOfResponsibility {
     using namespace std;
 
@@ -18,12 +19,13 @@ namespace chainOfResponsibility {
         unique_ptr<CC> next;
     public:
         void setNext(unique_ptr<CC> n);
-        virtual void help(Ticket* t);
+        virtual void help(Ticket* t); // przenieś do wyższej next instancji jeśli została określona
         virtual ~CC();
     };
 
     class BasicCC : public CC {
     public:
+// jesli ticket jest basic pomóż, else przenieś do wyższej instancji
         void help(Ticket* t) override;
     };
 
