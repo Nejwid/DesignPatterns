@@ -70,7 +70,8 @@ namespace bridge_Shelter {
         }
     }
 
-namespace interfaceShelter {
+namespace interfaceShelter { // w strategiach przekazujemy kopię listy więc zwracam wskaznik na element który będę chciał usunąć 
+//usuwam element w funkcji wyżej, porównując zawartość wskaźników (zawartość wskaźnika z kopii listy -który wskazuje na element który chce usunąć-, z zawartością wskaźników na oryginalnej liście)
 
     AdoptionStrategy::~AdoptionStrategy() {}
 
